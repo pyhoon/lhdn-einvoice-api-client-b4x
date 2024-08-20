@@ -1,0 +1,8 @@
+# ignore files
+*.b4j.meta
+*.zip
+
+# ignore ALL files in these directories
+AutoBackups/
+Objects/
+Files/

@@ -1,0 +1,69 @@
+﻿AppType=JavaFX
+Build1=Default,my.computerise.einvoice.api.client,Sandbox
+Build2=Production,my.computerise.einvoice.api.client,Production
+File1=1.bjl
+File2=config.properties
+FileGroup1=New Group
+FileGroup2=Default Group
+Group=App
+Library1=b4xpages
+Library2=jcore
+Library3=jfx
+Library4=jokhttputils2
+Library5=json
+Library6=xui views
+Module1=|relative|..\B4XMainPage
+Module2=|relative|..\EInvoice
+Module3=|relative|..\Env
+Module4=|relative|..\Platform
+NumberOfFiles=2
+NumberOfLibraries=6
+NumberOfModules=4
+Version=10
+@EndOfDesignText@
+' Product: 			LHDN e-Invoice API Client
+' Description: 		Make LHDN e-Invoice API call using SDK
+' Version: 			1.01
+' Language:			B4X
+' License:			MIT
+' Author:			Aeric Poon (email: aeric80 at gmail dot com)
+
+#Region Project Attributes 
+	#MainFormWidth: 900
+	#MainFormHeight: 600 
+#End Region
+
+Sub Process_Globals
+	Private fx As JFX
+	Private MainForm As Form
+End Sub
+
+Sub AppStart (Form1 As Form, Args() As String)
+	MainForm = Form1
+	MainForm.Show
+	Dim PagesManager As B4XPagesManager
+	PagesManager.Initialize(MainForm)
+End Sub
+
+'Template version: B4J-1.0
+#Region Delegates
+Sub MainForm_FocusChanged (HasFocus As Boolean)
+	B4XPages.Delegate.MainForm_FocusChanged(HasFocus)
+End Sub
+
+Sub MainForm_Resize (Width As Double, Height As Double)
+	B4XPages.Delegate.MainForm_Resize(Width, Height)
+End Sub
+
+Sub MainForm_Closed
+	B4XPages.Delegate.MainForm_Closed
+End Sub
+
+Sub MainForm_CloseRequest (EventData As Event)
+	B4XPages.Delegate.MainForm_CloseRequest(EventData)
+End Sub
+
+Public Sub MainForm_IconifiedChanged (Iconified As Boolean)
+	B4XPages.Delegate.MainForm_IconifiedChanged(Iconified)
+End Sub
+#End Region
