@@ -1,6 +1,7 @@
 # lhdn-einvoice-api-client-b4x
  
 Version: 1.01
+Author: Aeric Poon
 
 Make LHDN e-Invoice API call
 
