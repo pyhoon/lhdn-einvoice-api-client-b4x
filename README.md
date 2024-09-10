@@ -18,7 +18,7 @@ This is a B4J project designed to interact with the LHDN e-Invoice API, enabling
    Alternatively, you can download the ZIP file and extract it to your desired location.
 
 2. **Install B4J**:
-   - Download and install B4J by following the instructions provided on the [B4J website](https://www.b4x.com/b4j.html).
+   - Download and install B4J by following the instructions provided on the [B4X website](https://www.b4x.com/b4j.html).
    - If you encounter any issues during installation, you can get support from the [B4X developer community forum](https://www.b4x.com/android/forum/).
 
 3. **Configure the Project**:
