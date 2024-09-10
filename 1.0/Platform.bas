@@ -28,7 +28,7 @@ Public Sub Initialize
 	API_06 = CreateAPI("GET", "Get Notifications", $"https://${apiBaseUrl}/api/v1.0/notifications/taxpayer?dateFrom={dateFrom}&dateTo={dateTo}&type={type}&language={language}&status={status}&channel={channel}&pageNo={pageNo}&pageSize={pageSize}"$)
 End Sub
 
-Public Sub CreateAPI (Verb As String, Name As String, Link As String) As API
+Private Sub CreateAPI (Verb As String, Name As String, Link As String) As API
 	Dim t1 As API
 	t1.Initialize
 	t1.Verb = Verb

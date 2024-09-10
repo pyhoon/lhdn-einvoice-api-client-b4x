@@ -1,12 +1,11 @@
 # lhdn-einvoice-api-client-b4x
  
-Version: 1.01
+Version: 1.02
 
 Author: Aeric Poon
 
 Make LHDN e-Invoice API call
-
-*Note: Currently only first 5 Platform APIs are implemented*
+All Platform and E-Invoice APIs (v1.0) are implemented.
 
 ### Preview
 ![Windows version](https://raw.githubusercontent.com/pyhoon/lhdn-einvoice-api-client-b4x/main/lhdn-einvoice-api-client-1.png)
