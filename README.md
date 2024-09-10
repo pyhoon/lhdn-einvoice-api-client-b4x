@@ -1,9 +1,9 @@
 # LHDN e-Invoice API Client (B4X)
-## Version: 1.02
-## Author: Aeric Poon
+Version: 1.02\
+Author: Aeric Poon
 
 ### Overview
-This project is a B4J application designed to interact with the LHDN e-Invoice API, enabling users to perform various API calls such as logging in as a taxpayer system. The application uses B4XPages for managing different pages within the app.
+This is a B4J project designed to interact with the LHDN e-Invoice API, enabling users to perform various API calls such as logging in as a taxpayer system and submitting documents in XML and JSON format. The project uses B4XPages to make it simple to build cross platform apps.
 
 ### Prerequisites
 - **B4J**: Make sure you have B4J installed on your system. You can [download B4J here](https://www.b4x.com/b4j.html).
