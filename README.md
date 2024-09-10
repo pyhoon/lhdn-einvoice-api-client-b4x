@@ -27,16 +27,16 @@ This is a B4J project designed to interact with the LHDN e-Invoice API, enabling
    - Enter your `clientId` and `clientSecret` in the `config.properties` file. These credentials are required to make API calls.
 
 4. **Important: Comment Out ROBOCOPY Command**:
-   - If you **deleted** the `Shared Files` directory, you must comment out the ROBOCOPY command to prevent build errors.
+   - If `Shared Files` directory is missing, you must comment out the ROBOCOPY command to prevent build errors.
    - Open the `B4XMainPage.b4j` file and locate the following section:
-     ```b4x
+     ```B4X
      #Region Shared Files
      #CustomBuildAction: folders ready, %WINDIR%\System32\Robocopy.exe,"..\..\Shared Files" "..\Files"
      'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
      #End Region
      ```
    - Comment out the `#CustomBuildAction` line by adding a single quote (`'`) at the beginning:
-     ```b4x
+     ```B4X
      ' #CustomBuildAction: folders ready, %WINDIR%\System32\Robocopy.exe,"..\..\Shared Files" "..\Files"
      ```
 
