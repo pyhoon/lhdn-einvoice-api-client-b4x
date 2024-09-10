@@ -9,26 +9,24 @@ Version=9.85
 'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
 #End Region
 
-'Ctrl + click to export as zip: ide://run?File=%B4X%\Zipper.jar&Args=%PROJECT_NAME%.zip
+'GitHub Desktop ide://run?file=%WINDIR%\System32\cmd.exe&Args=/c&Args=github&Args=.
+'Export as zip: ide://run?File=%B4X%\Zipper.jar&Args=%PROJECT_NAME%.zip
 
 Sub Class_Globals
 	Private xui As XUI
+	Private API As API
+	Private E As EInvoice
+	Private P As Platform
 	Private Root As B4XView
 	Private B4XComboBox1 As B4XComboBox
 	Private LblEndPoint As B4XView
 	Private BtnSubmit As B4XView
-	'Private LblMessage As B4XView
 	Private TxtResponse As B4XFloatTextField
-	'Private https As String = "https://"
-	Private apiBaseUrl As String 'ignore
-	Private idSrvBaseUrl As String 'ignore
 	Private clientId As String
 	Private clientSecret As String
 	Private generatedAccessToken As String
 	Private headers As List
-	Private API As API
-	Private E As EInvoice 'ignore
-	Private P As Platform
+	Private format As String = "JSON"
 End Sub
 
 Public Sub Initialize
@@ -39,8 +37,6 @@ Public Sub Initialize
 	Env.Sandbox.idSrvBaseUrl = config.Get("Env.Sandbox.idSrvBaseUrl")
 	Env.Sandbox.clientId = config.Get("Env.Sandbox.clientId")
 	Env.Sandbox.clientSecret = config.Get("Env.Sandbox.clientSecret")
-	apiBaseUrl = Env.Sandbox.apiBaseUrl
-	idSrvBaseUrl = Env.Sandbox.idSrvBaseUrl
 	clientId = Env.Sandbox.clientId
 	clientSecret = Env.Sandbox.clientSecret
 	#End If
@@ -49,11 +45,10 @@ Public Sub Initialize
 	Env.Production.idSrvBaseUrl = config.Get("Env.Production.idSrvBaseUrl")
 	Env.Production.clientId = config.Get("Env.Production.clientId")
 	Env.Production.clientSecret = config.Get("Env.Production.clientSecret")
-	apiBaseUrl = Env.Production.apiBaseUrl
-	idSrvBaseUrl = Env.Production.idSrvBaseUrl
 	clientId = Env.Production.clientId
 	clientSecret = Env.Production.clientSecret
 	#End If
+	E.Initialize
 	P.Initialize
 End Sub
 
@@ -85,22 +80,44 @@ Private Sub BtnSubmit_Click
 		Case 3
 			MakePlatformApiCall2
 		Case 4
-			' test :id = 1
-			P.API_04.Link = P.API_04.Link.Replace(":id", 1)
 			MakePlatformApiCall2
 		Case 5
-			' test :id = 1, :vid = 1
-			P.API_05.Link = P.API_05.Link.Replace(":id", 1).Replace(":vid", 1)
 			MakePlatformApiCall2
 		Case 6
-			ShowError("Not yet implemented")
-			Return
-		'Case 7
-		'	Dim data As Map
-		'	MakeEInvoicingApiCall(data)
+			MakePlatformApiCall2
+		Case 7
+			MakeEInvoicingApiCall(Null)
+		Case 8
+			If format = "JSON" Then
+				Dim content As String = File.ReadString(File.DirAssets, "1.0-Invoice-Sample.json")
+				Dim document As Map = CreateMap("format": "JSON", _
+				"documentHash": SHA256(content), _
+				"codeNumber": "JSON-INV12345", _
+				"document": Base64Encode(content))
+			Else
+				Dim content As String = File.ReadString(File.DirAssets, "1.0-Invoice-Sample.xml")
+				Dim document As Map = CreateMap("format": "XML", _
+				"documentHash": SHA256(content), _
+				"codeNumber": "XML-INV12345", _
+				"document": Base64Encode(content))
+			End If
+			Dim documents As List
+			documents.Initialize
+			documents.Add(document)
+			Dim data As Map = CreateMap("documents": documents)
+			MakeEInvoicingApiCall(data)
+		Case 9
+			Dim data As Map = CreateMap("status": "cancelled", _
+			"reason": "some reason for cancelled document")
+			MakeEInvoicingApiCall(data)
+		Case 10
+			Dim data As Map = CreateMap("status": "rejected", _
+			"reason": "some reason for rejected document")
+			MakeEInvoicingApiCall(data)
+		Case 11, 12, 13, 14, 15
+			MakeEInvoicingApiCall(Null)
 		Case Else
 			'TxtResponse.Text = ""
-			Return
 	End Select
 End Sub
 
@@ -114,6 +131,15 @@ Private Sub PopulateApiList
 	apis.Add(P.API_04.Name)
 	apis.Add(P.API_05.Name)
 	apis.Add(P.API_06.Name)
+	apis.Add(E.API_01.Name)
+	apis.Add(E.API_02.Name)
+	apis.Add(E.API_03.Name)
+	apis.Add(E.API_04.Name)
+	apis.Add(E.API_05.Name)
+	apis.Add(E.API_06.Name)
+	apis.Add(E.API_07.Name)
+	apis.Add(E.API_08.Name)
+	apis.Add(E.API_09.Name)
 	B4XComboBox1.SetItems(apis)
 End Sub
 
@@ -192,29 +218,50 @@ Private Sub MakePlatformApiCall2
 	job.Release
 End Sub
 
-Private Sub MakeEInvoicingApiCall (payload As Map) 'ignore
-	Dim job As HttpJob
-	job.Initialize("", Me)
-	Dim body As String = payload.As(JSON).ToString
-	Select API.Verb
-		Case "GET"
-			job.Download(API.Link)
-		Case "POST"
-			job.PostString(API.Link, body)
-			job.GetRequest.SetContentType("application/json")
-		Case Else
-			ShowError("Bad Request")
-			Return
-	End Select	
-	job.GetRequest.SetHeader("Authorization", $"Bearer ${generatedAccessToken}"$)
-	Wait For (job) JobDone (job As HttpJob)
-	If job.Success Then
-		Dim message As Map = job.GetString.As(JSON).ToMap
-		ShowMessage(message.As(JSON).ToString)
-	Else
-		Dim error As Map = job.ErrorMessage.As(JSON).ToMap
-		ShowError(error.As(JSON).ToString)
-	End If
+Private Sub MakeEInvoicingApiCall (payload As Map)
+	Try
+		Dim job As HttpJob
+		job.Initialize("", Me)
+		If payload.IsInitialized Then
+			Dim body As String = payload.As(JSON).ToString
+		End If
+		Select API.Verb
+			Case "GET"
+				job.Download(API.Link)
+			Case "POST"
+				job.PostString(API.Link, body)
+				job.GetRequest.SetContentType("application/json")
+			Case "PUT"
+				job.PutString(API.Link, body)
+				job.GetRequest.SetContentType("application/json")
+			Case Else
+				ShowError("Bad Request")
+				Return
+		End Select
+		job.GetRequest.SetHeader("Authorization", $"Bearer ${generatedAccessToken}"$)
+		Wait For (job) JobDone (job As HttpJob)
+		If job.Success Then
+			Log("Success: " & job.Response.StatusCode)
+			Log(job.GetString)
+			If job.GetString.Length > 0 Then
+				Dim message As Map = job.GetString.As(JSON).ToMap
+				ShowMessage(message.As(JSON).ToString)
+			Else
+				ShowMessage("Success " & job.Response.StatusCode)
+			End If
+		Else
+			Log("Error: " & job.Response.StatusCode)
+			Log(job.ErrorMessage)
+			If job.ErrorMessage.Length > 0 Then
+				Dim error As Map = job.ErrorMessage.As(JSON).ToMap
+				ShowError(error.As(JSON).ToString)
+			Else
+				ShowError("Error " & job.Response.StatusCode)
+			End If
+		End If
+	Catch
+		Log(LastException)
+	End Try
 	job.Release
 End Sub
 
@@ -233,15 +280,103 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
 			LblEndPoint.Visible = True
 		Case 4
+			P.API_04.Link = P.API_04.Link.Replace(":id", 1)
 			API = P.API_04
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
 			LblEndPoint.Visible = True
 		Case 5
+			P.API_05.Link = P.API_05.Link.Replace(":id", 1)
+			P.API_05.Link = P.API_05.Link.Replace(":vid", 1)
 			API = P.API_05
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
 			LblEndPoint.Visible = True
 		Case 6
+			'P.API_06.Link = P.API_06.Link.Replace("{dateFrom}", "2024-09-01T12:30:40Z")
+			'P.API_06.Link = P.API_06.Link.Replace("{dateTo}", "2024-09-30T12:30:40Z")
+			'P.API_06.Link = P.API_06.Link.Replace("{type}", "2")
+			'P.API_06.Link = P.API_06.Link.Replace("{language}", "en")
+			'P.API_06.Link = P.API_06.Link.Replace("{status}", "delivered")
+			'P.API_06.Link = P.API_06.Link.Replace("{channel}", "email")
+			'P.API_06.Link = P.API_06.Link.Replace("{pageNo}", "3")
+			'P.API_06.Link = P.API_06.Link.Replace("{pageSize}", "20")
+			P.API_06.Link = P.API_06.Link.Replace("?dateFrom={dateFrom}&dateTo={dateTo}&type={type}&language={language}&status={status}&channel={channel}&pageNo={pageNo}&pageSize={pageSize}", "")
 			API = P.API_06
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 7
+			E.API_01.Link = E.API_01.Link.Replace("{tin}", "C25845632020")
+			E.API_01.Link = E.API_01.Link.Replace("{idType}", "NRIC") ' NRIC / PASSPORT / BRN / ARMY
+			E.API_01.Link = E.API_01.Link.Replace("{idValue}", "770625015324") ' 770625015324 / A12345678 / 201901234567 / 551587706543
+			API = E.API_01
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 8
+			API = E.API_02
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 9
+			E.API_03.Link = E.API_03.Link.Replace("{UUID}", "F9D425P6DS7D8IU")
+			API = E.API_03
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 10
+			E.API_04.Link = E.API_04.Link.Replace("{UUID}", "F9D425P6DS7D8IU")
+			API = E.API_04
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 11
+			E.API_05.Link = E.API_05.Link.Replace("{pageNo}", "3")
+			E.API_05.Link = E.API_05.Link.Replace("{pageSize}", "20")
+			E.API_05.Link = E.API_05.Link.Replace("{submissionDateFrom}", "2024-09-01T00:00:00Z")
+			E.API_05.Link = E.API_05.Link.Replace("{submissionDateTo}", "2024-09-30T00:00:00Z")
+			E.API_05.Link = E.API_05.Link.Replace("{issueDateFrom}", "2024-09-01T00:00:00Z")
+			E.API_05.Link = E.API_05.Link.Replace("{IssueDateTo}", "2024-09-10T00:00:00Z")
+			E.API_05.Link = E.API_05.Link.Replace("{direction}", "Sent")
+			E.API_05.Link = E.API_05.Link.Replace("{status}", "Valid")
+			E.API_05.Link = E.API_05.Link.Replace("{documentType}", "01")
+			E.API_05.Link = E.API_05.Link.Replace("{issuerId}", "770625015324")
+			E.API_05.Link = E.API_05.Link.Replace("{issuerIdType}", "NRIC")
+			E.API_05.Link = E.API_05.Link.Replace("{issuerTin}", "C2584563200")
+			E.API_05.Link = E.API_05.Link.Replace("{receiverId}", "770625015324")
+			E.API_05.Link = E.API_05.Link.Replace("{receiverIdType}", "NRIC")
+			E.API_05.Link = E.API_05.Link.Replace("{receiverTin}", "C2584563200")
+			API = E.API_05
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 12
+			E.API_06.Link = E.API_06.Link.Replace("{submissionUid}", "HJSD135P2S7D8IU")
+			E.API_06.Link = E.API_06.Link.Replace("{pageNo}", "3")
+			E.API_06.Link = E.API_06.Link.Replace("{pageSize}", "20")
+			API = E.API_06
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 13
+			E.API_07.Link = E.API_07.Link.Replace("{uuid}", "F9D425P6DS7D8IU")
+			API = E.API_07
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 14
+			E.API_08.Link = E.API_08.Link.Replace("{uuid}", "F9D425P6DS7D8IU")
+			API = E.API_08
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+			LblEndPoint.Visible = True
+		Case 15
+			'E.API_09.Link = E.API_09.Link.Replace("{uuid}", "F9D425P6DS7D8IU")
+			'E.API_09.Link = E.API_09.Link.Replace("{submissionDateFrom}", "2024-09-01T00:00:00Z")
+			'E.API_09.Link = E.API_09.Link.Replace("{submissionDateTo}", "2024-09-30T00:00:00Z")
+			'E.API_09.Link = E.API_09.Link.Replace("{continuationToken}", "")
+			'E.API_09.Link = E.API_09.Link.Replace("{pageSize}", "20")
+			'E.API_09.Link = E.API_09.Link.Replace("{issueDateFrom}", "2024-09-01T00:00:00Z")
+			'E.API_09.Link = E.API_09.Link.Replace("{issueDateTo}", "2024-09-30T00:00:00Z")
+			'E.API_09.Link = E.API_09.Link.Replace("{direction}", "Sent")
+			'E.API_09.Link = E.API_09.Link.Replace("{status}", "Valid")
+			'E.API_09.Link = E.API_09.Link.Replace("{documentType}", "01")
+			'E.API_09.Link = E.API_09.Link.Replace("{issuerTin}", "C2584563200")
+			'E.API_09.Link = E.API_09.Link.Replace("{receiverId}", "770625015324")
+			'E.API_09.Link = E.API_09.Link.Replace("{receiverIdType}", "NRIC")
+			'E.API_09.Link = E.API_09.Link.Replace("{receiverTin}", "C2584563200")
+			E.API_09.Link = E.API_09.Link.Replace($"?uuid={uuid}&submissionDateFrom={submissionDateFrom}&submissionDateTo={submissionDateTo}&continuationToken={continuationToken}&pageSize={pageSize}&issueDateFrom={issueDateFrom}&issueDateTo={issueDateTo}&direction={direction}&status={status}&documentType={documentType}&receiverId={receiverId}&receiverIdType={receiverIdType}&issuerTin={issuerTin}&receiverTin={receiverTin}"$, "")
+			API = E.API_09
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
 			LblEndPoint.Visible = True
 		Case Else
@@ -251,19 +386,26 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 End Sub
 
 Public Sub ShowMessage (Message As String)
-	'LblMessage.Text = Message
-	'LblMessage.Color = xui.Color_RGB(127, 255, 212)
-	'LblMessage.TextColor = xui.Color_RGB(0, 100, 0)
-	'LblMessage.Visible = True
 	TxtResponse.Text = Message
 	TxtResponse.TextField.TextColor = xui.Color_RGB(0, 100, 0)
 End Sub
 
 Public Sub ShowError (Error As String)
-	'LblMessage.Text = Error
-	'LblMessage.Color = xui.Color_RGB(255, 182, 193)
-	'LblMessage.TextColor = xui.Color_RGB(178, 34, 34)
-	'LblMessage.Visible = True
 	TxtResponse.Text = Error
 	TxtResponse.TextField.TextColor = xui.Color_RGB(178, 34, 34)
+End Sub
+
+Public Sub SHA256 (str As String) As String
+	Dim data() As Byte
+	Dim MD As MessageDigest
+	Dim BC As ByteConverter
+	data = BC.StringToBytes(str, "UTF8")
+	data = MD.GetMessageDigest(data, "SHA-256")
+	Return BC.HexFromBytes(data).ToLowerCase
+End Sub
+
+Public Sub Base64Encode (str As String) As String
+	Dim SU As StringUtils
+	Dim encoded As String = SU.EncodeBase64(str.GetBytes("UTF8"))
+	Return encoded
 End Sub

@@ -1,13 +1,13 @@
 # LHDN e-Invoice API Client (B4X)
-## Version: 1.01
-## Forked Author: Aeric Poon
+## Version: 1.02
+## Author: Aeric Poon
 
 ### Overview
 This project is a B4J application designed to interact with the LHDN e-Invoice API, enabling users to perform various API calls such as logging in as a taxpayer system. The application uses B4XPages for managing different pages within the app.
 
 ### Prerequisites
 - **B4J**: Make sure you have B4J installed on your system. You can [download B4J here](https://www.b4x.com/b4j.html).
-- **Java JDK**: The project has been tested with Java 14, so ensure you have a compatible version installed.
+- **Java JDK**: The project has been tested with Java 11 and 14, so ensure you have a compatible version installed.
 
 ### Installation and Setup
 
@@ -27,7 +27,7 @@ This project is a B4J application designed to interact with the LHDN e-Invoice A
    - Enter your `clientId` and `clientSecret` in the `config.properties` file. These credentials are required to make API calls.
 
 4. **Important: Comment Out ROBOCOPY Command**:
-   - If you **do not** have the `Shared Files` directory set up, you must comment out the ROBOCOPY command to prevent build errors.
+   - If you **deleted** the `Shared Files` directory, you must comment out the ROBOCOPY command to prevent build errors.
    - Open the `B4XMainPage.b4j` file and locate the following section:
      ```b4x
      #Region Shared Files
@@ -48,6 +48,10 @@ This project is a B4J application designed to interact with the LHDN e-Invoice A
 6. **Using the Application**:
    - Select an API from the dropdown list or combobox (e.g., "Login as Taxpayer System").
    - Click the green "SUBMIT" button to make the API call.
+
+7. **Future versions**:
+   - API Version 1.1
+   - B4A and B4i to support Android and iOS
 
 ### Troubleshooting
 
