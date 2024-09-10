@@ -8,11 +8,11 @@ Version=10
 Sub Process_Globals
 	#If Sandbox
 	Public Sandbox As Sandbox
-	Type Sandbox (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret As String, generatedAccessToken As String)
+	Type Sandbox (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret As String)
 	#End If
 	#If Production
 	Public Production As Production
-	Type Production (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret As String, generatedAccessToken As String)
+	Type Production (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret As String)
 	#End If
 End Sub
 
@@ -24,7 +24,6 @@ Public Sub Init
 	Sandbox.idSrvBaseUrl = ""
 	Sandbox.clientId = ""
 	Sandbox.clientSecret = ""
-	Sandbox.generatedAccessToken = ""
 	#End If
 	#If Production
 	Production.Initialize
@@ -32,6 +31,5 @@ Public Sub Init
 	Production.idSrvBaseUrl = ""
 	Production.clientId = ""
 	Production.clientSecret = ""
-	Production.generatedAccessToken = ""
 	#End If
 End Sub

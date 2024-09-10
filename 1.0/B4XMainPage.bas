@@ -182,12 +182,7 @@ Private Sub MakePlatformApiCall (payload As Map)
 		Log($"access_token: ${generatedAccessToken}"$)
 		Log($"expires_in: ${expires_in}"$)
 		Log($"token_type: ${token_type}"$)
-		Log($"scope: ${scope}"$)
-		#If Production
-		Env.Production.clientSecret = generatedAccessToken
-		#Else
-		Env.Sandbox.clientSecret = generatedAccessToken
-		#End If		
+		Log($"scope: ${scope}"$)	
 		ShowMessage(response.As(JSON).ToString)
 	Else
 		Dim error As Map = job.ErrorMessage.As(JSON).ToMap
