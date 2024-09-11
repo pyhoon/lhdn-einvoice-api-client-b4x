@@ -49,10 +49,6 @@ This is a B4J project designed to interact with the LHDN e-Invoice API, enabling
    - Select an API from the dropdown list or combobox (e.g., "Login as Taxpayer System").
    - Click the green "SUBMIT" button to make the API call.
 
-7. **Future versions**:
-   - API Version 1.1
-   - B4A and B4i to support Android and iOS
-
 ### Troubleshooting
 
 - **Error: Source Directory Not Found**:
@@ -60,6 +56,10 @@ This is a B4J project designed to interact with the LHDN e-Invoice API, enabling
 
 - **Java Version Issues**:
   - Ensure you are using Java JDK 14 or a compatible version. If you experience issues, consider upgrading or downgrading your Java installation as necessary.
+
+### Future versions
+   - API Version 1.1
+   - B4A and B4i to support Android and iOS
 
 ### License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
