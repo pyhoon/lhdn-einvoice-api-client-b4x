@@ -1,7 +1,11 @@
 # ignore files
-*.b4j.meta
 *.zip
 
 # ignore ALL files in these directories
 AutoBackups/
 Objects/
+
+# Include drawable for B4A
+!B4A/Objects/
+B4A/Objects/
+!B4A/Objects/res/drawable/*
