@@ -6,13 +6,13 @@ Author: Aeric Poon
 This is a B4X project designed to interact with the LHDN e-Invoice API, enabling users to perform various API calls such as logging in as a taxpayer system and submitting documents in XML and JSON format. The project uses B4XPages to make it simple to build cross platform apps.
 
 ### Prerequisites
-- **B4J**: To build Desktop app (Windows/Linux/Mac), you need to install [B4J](https://www.b4x.com/b4j.html) on your Windows system.
-- **B4A**: To build Android app (for smartphone/tablet), you need to install [B4A](https://www.b4x.com/b4a.html) on your Windows system.
-- **B4i**: To build iOS app (for iPhone/iPad), you need to install [B4i](https://www.b4x.com/b4i.html) on your Windows system.
-- **Java JDK**: The project has been tested with Java 11, 14 and 19, so ensure you have a compatible version installed.
-- **Apple Developer account**: To build iOS app, you need active Apple Developer account to create provisional profile and certificate.
+- **B4J**: To build Desktop app (Windows/Linux/Mac), you need to install [B4J](https://www.b4x.com/b4j.html) (free) on your Windows system.
+- **B4A**: To build Android app (for smartphone/tablet), you need to install [B4A](https://www.b4x.com/b4a.html) (free) on your Windows system.
+- **B4i**: To build iOS app (for iPhone/iPad), you need to install [B4i](https://www.b4x.com/b4i.html) on your Windows system. You need to [purchase a license](https://www.b4x.com/store.html).
+- **Java JDK**: The IDEs requires Java [JDK 11](https://www.b4x.com/b4j/files/java/jdk-11.0.1.zip)/[JDK 14](https://www.b4x.com/b4j/files/java/jdk-14.0.1.zip)/[JDK 19](https://www.b4x.com/b4j/files/jdk-19.0.2.zip) installed.
+- **Apple Developer account**: To build iOS app, you need active [Apple Developer account](https://developer.apple.com/account/) to create provisional profile and certificate.
 - **Mac + Xcode**: You need a Mac or MacBook with supported version of Xcode installed to build the iOS app. You need an iPhone or iPad. You can also use simulator from Xcode.
-- **Hosted Builder**: If you don't have a Mac, you can use the cloud service to build your iOS app. You need an iPhone or iPad. You cannot use a simulator.
+- **Hosted Builder**: If you don't have a Mac, you can use the [cloud service](https://www.b4x.com/store.html) to build your iOS app on Windows. You need an iPhone or iPad. You cannot use a simulator.
 
 ### Installation and Setup
 1. **Clone the Repository**:
@@ -43,8 +43,8 @@ This is a B4X project designed to interact with the LHDN e-Invoice API, enabling
 'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
 #End Region
 ```
-3. Press and hold Ctrl key on keyboard and mouse click on the link: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
-This will copy the files from `Shared Files` folder to your B4J `Files` folder.
+3. Press and hold Ctrl key on keyboard and mouse click on the link: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True\
+This will copy the files from `Shared Files` folder to your B4J/B4A/B4i `Files` folder.
 4. Click the **Run** button (play button).
 5. Wait for the compilation and the application interface will launch.
 6. For Android, you need to click install from the device. 
@@ -52,12 +52,13 @@ This will copy the files from `Shared Files` folder to your B4J `Files` folder.
 ### Running the Application
 1. Select an API from the dropdown list or combobox (e.g. "Login as Taxpayer System").
 2. Click the green "SUBMIT" button to make the API call.
-3. After getting the access token, you can proceed to call other APIs.
+3. After getting the `access token`, you can proceed to call other APIs.
 4. Stop the process by clicking on the stop button on the IDE.
-5. Make changes to any commented parameters in the code and make further testing.
-6. By default, the IDE is using `Default` build configuration to make API calls to LHDN Sandbox environment.
-7. To make API calls to LHDN Production environment, you need to specify the correct credentials in config.properties file. In the IDE, select `Production` from the build configuration dropdown list (next to Debug dropdown list) which is selected as `Default` by default.
-8. This is same for all platforms (B4J, B4A and B4i).
+5. Make changes to any parameters in the code and make further testing. e.g provide valid TIN or UUID values.
+6. The subs you need to focus are `B4XComboBox1_SelectedIndexChanged` and `BtnSubmit_Click`.
+7. By default, the IDE is using `Default` build configuration to make API calls to LHDN Sandbox environment.
+8. To make API calls to LHDN Production environment, you need to specify the correct credentials in config.properties file. In the IDE, select `Production` from the build configuration dropdown list (next to Debug dropdown list) which is selected as `Default` by default.
+9. This is same for all platforms (B4J, B4A and B4i).
 
 ### Future versions
 
@@ -66,15 +67,15 @@ This will copy the files from `Shared Files` folder to your B4J `Files` folder.
 ### Troubleshooting
 
 1. If you see the following warning in the Logs:
-   ```B4X
+   ```
    File 'xxx.xxx' is missing from the Files tab (warning #17)
    ```
    Press Ctrl + click to sync: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
 
 2. If you see the following warning in the Logs:
-   ```B4X
+   ```
    File 'xxx.xxx' in Files folder was not added to the Files tab.
-   You should either delete it Or add it To the project.
+   You should either delete it or add it to the project.
    You can choose Tools - Clean unused files. (warning #14)
    ```
    Go to Files Manager tab and click the 'Sync' button
