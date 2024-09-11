@@ -3,9 +3,12 @@
 
 # ignore ALL files in these directories
 AutoBackups/
-Objects/
+1.0/B4J/Objects/
+1.0/B4i/Objects/
 
 # Include drawable for B4A
-!B4A/Objects/
-B4A/Objects/
-!B4A/Objects/res/drawable/*
+1.0/B4A/Objects/*
+!1.0/B4A/Objects/res/
+
+1.0/B4A/Objects/res/*
+!1.0/B4A/Objects/res/drawable/
