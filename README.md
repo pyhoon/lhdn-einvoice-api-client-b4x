@@ -20,7 +20,6 @@ This is a B4X project designed to interact with the LHDN e-Invoice API, enabling
    git clone https://github.com/pyhoon/lhdn-einvoice-api-client-b4x.git
    ```
    Alternatively, you can download the ZIP file and extract it to your desired location.
-
 2. **Install B4J/B4A/B4i**:
    - Download and install [B4J](https://www.b4x.com/b4j.html)/[B4A](https://www.b4x.com/b4a.html)/[B4i](https://www.b4x.com/b4i.html) by following the instructions provided on the website.
    - If you encounter any issues during installation, you can get support from the [B4X developer community forum](https://www.b4x.com/android/forum/).
@@ -77,6 +76,10 @@ Press Ctrl + click to sync: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=.
 Go to Files Manager tab and click the 'Sync' button
 3. Compilation error:
 Make sure you are using Java JDK listed on the installation website. Otherwise, it may be missing JavaFX support and the application will not run.
+
+### Future versions
+   - API Version 1.1
+   - B4A and B4i to support Android and iOS
 
 ### License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
