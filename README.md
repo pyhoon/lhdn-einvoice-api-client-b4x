@@ -56,9 +56,10 @@ This will copy the files from `Shared Files` folder to your B4J/B4A/B4i `Files` 
 4. Stop the process by clicking on the stop button on the IDE.
 5. Make changes to any parameters in the code and make further testing. e.g provide valid TIN or UUID values.
 6. The subs you need to focus are `B4XComboBox1_SelectedIndexChanged` and `BtnSubmit_Click`.
-7. By default, the IDE is using `Default` build configuration to make API calls to LHDN Sandbox environment.
-8. To make API calls to LHDN Production environment, you need to specify the correct credentials in config.properties file. In the IDE, select `Production` from the build configuration dropdown list (next to Debug dropdown list) which is selected as `Default` by default.
-9. This is same for all platforms (B4J, B4A and B4i).
+7. You may also want to replace the `1.0-Invoice-Sample.xml` or `1.0-Invoice-Sample.json` files with your copy.
+8. By default, the IDE is using `Default` build configuration to make API calls to LHDN Sandbox environment.
+9. To make API calls to LHDN Production environment, you need to specify the correct credentials in config.properties file. In the IDE, select `Production` from the build configuration dropdown list (next to Debug dropdown list) which is selected as `Default` by default.
+10. This is same for all platforms (B4J, B4A and B4i).
 
 ### Future versions
 
