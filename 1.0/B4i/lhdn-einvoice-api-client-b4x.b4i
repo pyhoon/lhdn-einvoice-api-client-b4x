@@ -1,19 +1,33 @@
-﻿Build1=Default,b4i.example
-File1=MainPage.bil
-FileGroup1=Default Group
-Group=Default Group
-Library1=icore
-Library2=b4xpages
+﻿Build1=Default,my.computerise.einvoice.api.client,Sandbox
+Build2=Production,my.computerise.einvoice.api.client,Production
+File1=1.bil
+FileGroup1=New Group
+Group=App
+Library1=b4xpages
+Library2=icore
+Library3=iencryption
+Library4=ihttputils2
+Library5=ijson
+Library6=istringutils
+Library7=xui views
+Library8=irandomaccessfile
 Module1=|relative|..\B4XMainPage
+Module2=|relative|..\EInvoice
+Module3=|relative|..\Env
+Module4=|relative|..\Platform
 NumberOfFiles=1
-NumberOfLibraries=2
-NumberOfModules=1
-Version=6.5
+NumberOfLibraries=8
+NumberOfModules=4
+Version=8.51
 @EndOfDesignText@
 'Code module
 #Region  Project Attributes 
-	#ApplicationLabel: B4i Example
-	#Version: 1.0.0 
+	#ApplicationLabel: 	LHDN e-Invoice API Client
+	#Version: 			1.0.4
+	'Language:			B4X (B4i)
+	'License:			MIT
+	'Author:			Aeric Poon (email: aeric 80 at gmail dot com)
+	'GitHub:			https://github.com/pyhoon/lhdn-einvoice-api-client-b4x
 	'Orientation possible values: Portrait, LandscapeLeft, LandscapeRight and PortraitUpsideDown
 	#iPhoneOrientations: Portrait, LandscapeLeft, LandscapeRight
 	#iPadOrientations: Portrait, LandscapeLeft, LandscapeRight, PortraitUpsideDown
@@ -21,11 +35,17 @@ Version=6.5
 	#ATSEnabled: True
 	#MinVersion: 11
 #End Region
+#if RELEASE
+	#CertificateFile: ios_distribution.cer
+	#ProvisionFile: distribution.mobileprovision
+#Else
+	#CertificateFile: ios_development.cer
+	#ProvisionFile: development.mobileprovision
+#End If
 
 Sub Process_Globals
 	Public App As Application
 	Public NavControl As NavigationController
-
 End Sub
 
 Private Sub Application_Start (Nav As NavigationController)

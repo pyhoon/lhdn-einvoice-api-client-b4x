@@ -1,23 +1,37 @@
-﻿Build1=Default,b4a.example
-File1=MainPage.bal
-FileGroup1=Default Group
-Group=Default Group
-Library1=core
-Library2=b4xpages
+﻿Build1=Default,my.computerise.einvoice.api.client,Sandbox
+Build2=Production,my.computerise.einvoice.api.client,Production
+File1=1.bal
+FileGroup1=New Group
+Group=App
+Library1=b4xpages
+Library2=core
+Library3=encryption
+Library4=json
+Library5=okhttputils2
+Library6=stringutils
+Library7=xui views
+Library8=byteconverter
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
 Module1=|relative|..\B4XMainPage
-Module2=Starter
+Module2=|relative|..\EInvoice
+Module3=|relative|..\Env
+Module4=|relative|..\Platform
+Module5=Starter
 NumberOfFiles=1
-NumberOfLibraries=2
-NumberOfModules=2
-Version=9.9
+NumberOfLibraries=8
+NumberOfModules=5
+Version=12.8
 @EndOfDesignText@
 #Region  Project Attributes 
-	#ApplicationLabel: B4A Example
-	#VersionCode: 1
-	#VersionName: 
+	#ApplicationLabel: 	LHDN e-Invoice API Client
+	#VersionCode: 		1
+	#VersionName: 		1.04
+	'Language:			B4X (B4A)
+	'License:			MIT
+	'Author:			Aeric Poon (email: aeric 80 at gmail dot com)
+	'GitHub:			https://github.com/pyhoon/lhdn-einvoice-api-client-b4x
 	'SupportedOrientations possible values: unspecified, landscape or portrait.
-	#SupportedOrientations: portrait
+	#SupportedOrientations: unspecified
 	#CanInstallToExternalStorage: False
 #End Region
 
@@ -74,9 +88,6 @@ End Sub
 public boolean _onCreateOptionsMenu(android.view.Menu menu) {
 	 processBA.raiseEvent(null, "create_menu", menu);
 	 return true;
-	
 }
 #End If
 #End Region
-
-'Program code should go into B4XMainPage and other pages.

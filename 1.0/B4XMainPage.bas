@@ -8,9 +8,12 @@ Version=9.85
 #CustomBuildAction: folders ready, %WINDIR%\System32\Robocopy.exe,"..\..\Shared Files" "..\Files"
 'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
 #End Region
-
-'GitHub Desktop ide://run?file=%WINDIR%\System32\cmd.exe&Args=/c&Args=github&Args=.
-'Export as zip: ide://run?File=%B4X%\Zipper.jar&Args=%PROJECT_NAME%.zip
+#Region GitHub Desktop
+'Ctrl + click to open: ide://run?file=%WINDIR%\System32\cmd.exe&Args=/c&Args=github&Args=.
+#End Region
+#Region Zip B4XPages Project
+'Ctrl + click to export: ide://run?File=%B4X%\Zipper.jar&Args=%PROJECT_NAME%.zip
+#End Region
 
 Sub Class_Globals
 	Private xui As XUI
@@ -117,7 +120,7 @@ Private Sub BtnSubmit_Click
 		Case 11, 12, 13, 14, 15
 			MakeEInvoicingApiCall(Null)
 		Case Else
-			'TxtResponse.Text = ""
+			TxtResponse.Text = ""
 	End Select
 End Sub
 
@@ -265,26 +268,21 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 		Case 1
 			API = P.API_01
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 2
 			API = P.API_02
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 3
 			API = P.API_03
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 4
 			P.API_04.Link = P.API_04.Link.Replace(":id", 1)
 			API = P.API_04
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 5
 			P.API_05.Link = P.API_05.Link.Replace(":id", 1)
 			P.API_05.Link = P.API_05.Link.Replace(":vid", 1)
 			API = P.API_05
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 6
 			'P.API_06.Link = P.API_06.Link.Replace("{dateFrom}", "2024-09-01T12:30:40Z")
 			'P.API_06.Link = P.API_06.Link.Replace("{dateTo}", "2024-09-30T12:30:40Z")
@@ -297,28 +295,23 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 			P.API_06.Link = P.API_06.Link.Replace("?dateFrom={dateFrom}&dateTo={dateTo}&type={type}&language={language}&status={status}&channel={channel}&pageNo={pageNo}&pageSize={pageSize}", "")
 			API = P.API_06
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 7
 			E.API_01.Link = E.API_01.Link.Replace("{tin}", "C25845632020")
 			E.API_01.Link = E.API_01.Link.Replace("{idType}", "NRIC") ' NRIC / PASSPORT / BRN / ARMY
 			E.API_01.Link = E.API_01.Link.Replace("{idValue}", "770625015324") ' 770625015324 / A12345678 / 201901234567 / 551587706543
 			API = E.API_01
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 8
 			API = E.API_02
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 9
 			E.API_03.Link = E.API_03.Link.Replace("{UUID}", "F9D425P6DS7D8IU")
 			API = E.API_03
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 10
 			E.API_04.Link = E.API_04.Link.Replace("{UUID}", "F9D425P6DS7D8IU")
 			API = E.API_04
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 11
 			E.API_05.Link = E.API_05.Link.Replace("{pageNo}", "3")
 			E.API_05.Link = E.API_05.Link.Replace("{pageSize}", "20")
@@ -337,24 +330,20 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 			E.API_05.Link = E.API_05.Link.Replace("{receiverTin}", "C2584563200")
 			API = E.API_05
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 12
 			E.API_06.Link = E.API_06.Link.Replace("{submissionUid}", "HJSD135P2S7D8IU")
 			E.API_06.Link = E.API_06.Link.Replace("{pageNo}", "3")
 			E.API_06.Link = E.API_06.Link.Replace("{pageSize}", "20")
 			API = E.API_06
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 13
 			E.API_07.Link = E.API_07.Link.Replace("{uuid}", "F9D425P6DS7D8IU")
 			API = E.API_07
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 14
 			E.API_08.Link = E.API_08.Link.Replace("{uuid}", "F9D425P6DS7D8IU")
 			API = E.API_08
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case 15
 			'E.API_09.Link = E.API_09.Link.Replace("{uuid}", "F9D425P6DS7D8IU")
 			'E.API_09.Link = E.API_09.Link.Replace("{submissionDateFrom}", "2024-09-01T00:00:00Z")
@@ -373,9 +362,8 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 			E.API_09.Link = E.API_09.Link.Replace($"?uuid={uuid}&submissionDateFrom={submissionDateFrom}&submissionDateTo={submissionDateTo}&continuationToken={continuationToken}&pageSize={pageSize}&issueDateFrom={issueDateFrom}&issueDateTo={issueDateTo}&direction={direction}&status={status}&documentType={documentType}&receiverId={receiverId}&receiverIdType={receiverIdType}&issuerTin={issuerTin}&receiverTin={receiverTin}"$, "")
 			API = E.API_09
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
-			LblEndPoint.Visible = True
 		Case Else
-			LblEndPoint.Visible = False
+			LblEndPoint.Text = "Please select an API"
 			TxtResponse.Text = ""
 	End Select
 End Sub

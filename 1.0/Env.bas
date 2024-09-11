@@ -17,7 +17,7 @@ Sub Process_Globals
 End Sub
 
 ' Currently not used
-Public Sub Init
+Public Sub Reset
 	#If Sandbox
 	Sandbox.Initialize
 	Sandbox.apiBaseUrl = ""

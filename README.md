@@ -1,65 +1,82 @@
 # LHDN e-Invoice API Client (B4X)
-Version: 1.03\
+Version: 1.04\
 Author: Aeric Poon
 
 ### Overview
-This is a B4J project designed to interact with the LHDN e-Invoice API, enabling users to perform various API calls such as logging in as a taxpayer system and submitting documents in XML and JSON format. The project uses B4XPages to make it simple to build cross platform apps.
+This is a B4X project designed to interact with the LHDN e-Invoice API, enabling users to perform various API calls such as logging in as a taxpayer system and submitting documents in XML and JSON format. The project uses B4XPages to make it simple to build cross platform apps.
 
 ### Prerequisites
-- **B4J**: Make sure you have B4J installed on your system. You can [download B4J here](https://www.b4x.com/b4j.html).
-- **Java JDK**: The project has been tested with Java 11 and 14, so ensure you have a compatible version installed.
+- **B4J**: To build Desktop app (Windows/Linux/Mac), you need to install B4J on your Windows system. You can [download B4J here](https://www.b4x.com/b4j.html).
+- **B4A**: To build Android app (for smartphone/tablet), you need to install B4A on your Windows system. You can [download B4A here](https://www.b4x.com/b4a.html).
+- **B4i**: To build iOS app (for iPhone/iPad), you need to install B4i on your Windows system. You can [purchase B4i here](https://www.b4x.com/b4i.html).
+- **Java JDK**: The project has been tested with Java 11, 14 and 19, so ensure you have a compatible version installed.
+- **Apple Developer account**: To build B4i iOS app, you need active Apple Developer account to create provisional profile and certificate.
+- **Mac + Xcode**: You need a Mac or MacBook with supported version of Xcode installed to build the iOS app. You need an iPhone or iPad. You can simulator from Xcode.
+- **Hosted Builder**: If you don't have a Mac, you can use the cloud service to build your iOS app. You need an iPhone or iPad. You cannot use a simulator.
 
 ### Installation and Setup
-
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/pyhoon/lhdn-einvoice-api-client-b4x.git
    ```
    Alternatively, you can download the ZIP file and extract it to your desired location.
 
-2. **Install B4J**:
-   - Download and install B4J by following the instructions provided on the [B4J website](https://www.b4x.com/b4j.html).
+2. **Install B4J/B4A/B4i**:
+   - Download and install [B4J](https://www.b4x.com/b4j.html)/[B4A](https://www.b4x.com/b4a.html)/[B4i](https://www.b4x.com/b4i.html) by following the instructions provided on the website.
    - If you encounter any issues during installation, you can get support from the [B4X developer community forum](https://www.b4x.com/android/forum/).
+   - For B4A, you need to install B4A-Bridge on an Android device for debugging. You can also use an Android Virtual Device (emulator).
+   - For B4i, you need to install B4i-Bridge on an iOS device for debugging. You can also use a simulator app installed together with Xcode. Make sure you have specify the filenames for #CertificateFile and #ProvisionFile downloaded from Apple Developer website.
 
-3. **Configure the Project**:
-   - Navigate to the project directory: `lhdn-einvoice-api-client-b4x/1.0/B4J`.
-   - Open the `config.properties` file in a text editor.
-   - Enter your `clientId` and `clientSecret` in the `config.properties` file. These credentials are required to make API calls.
+### Configure the Project
+1. Navigate to `Shared Files` folder and open `config.properties` file in a text editor.
+2. Enter your registered ERP `clientId` and `clientSecret` in the `config.properties` file and save it. These credentials are required to generate an access token to make API calls.
+**Important: Do not distribute your app with production Client Id and Secret!**
+- This app is use for the purpose of quick testing only.
+- Do not publish the final binary app to the public.
 
-4. **Important: Comment Out ROBOCOPY Command**:
-   - If `Shared Files` directory is missing, you must comment out the ROBOCOPY command to prevent build errors.
-   - Open the `B4XMainPage.b4j` file and locate the following section:
-     ```B4X
-     #Region Shared Files
-     #CustomBuildAction: folders ready, %WINDIR%\System32\Robocopy.exe,"..\..\Shared Files" "..\Files"
-     'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
-     #End Region
-     ```
-   - Comment out the `#CustomBuildAction` line by adding a single quote (`'`) at the beginning:
-     ```B4X
-     ' #CustomBuildAction: folders ready, %WINDIR%\System32\Robocopy.exe,"..\..\Shared Files" "..\Files"
-     ```
+### Open the Project
+1. Double click the file `lhdn-einvoice-api-client-b4x.b4j` for B4J or `lhdn-einvoice-api-client-b4x.b4a` for B4A or `lhdn-einvoice-api-client-b4x.b4i` for B4i to open the project.
+2. Click the `B4XMainPage` module (if not already open) and locate the following section:
+   ```B4X
+   #Region Shared Files
+   #CustomBuildAction: folders ready, %WINDIR%\System32\Robocopy.exe,"..\..\Shared Files" "..\Files"
+   'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
+   #End Region
+   ```
+3. Press and hold Ctrl key on keyboard and mouse click on the link: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
+This will copy the files from `Shared Files` folder to your B4J `Files` folder.
+4. Click the **Run** button (play button).
+5. Wait for the compilation and the application interface will launch.
+6. For Android, you need to click install from the device. 
 
-5. **Run the Project**:
-   - Open the `lhdn-einvoice-api-client-b4x.b4j` file in the B4J IDE.
-   - Click the **Run** button (the play button in the IDE).
-   - The application interface will launch.
+### Running the Application
+1. Select an API from the dropdown list or combobox (e.g. "Login as Taxpayer System").
+2. Click the green "SUBMIT" button to make the API call.
+3. After getting the access token, you can proceed to call other APIs.
+4. Stop the process by clicking on the stop button on the IDE.
+5. Make changes to any commented parameters in the code and make further testing.
+6. By default, the IDE is using `Default` build configuration to make API calls to LHDN Sandbox environment.
+7. To make API calls to LHDN Production environment, you need to specify the correct credentials in config.properties file. In the IDE, select `Production` from the build configuration dropdown list (next to Debug dropdown list) which is selected as `Default` by default.
+8. This is same for all platforms (B4J, B4A and B4i).
 
-6. **Using the Application**:
-   - Select an API from the dropdown list or combobox (e.g., "Login as Taxpayer System").
-   - Click the green "SUBMIT" button to make the API call.
-
-7. **Future versions**:
-   - API Version 1.1
-   - B4A and B4i to support Android and iOS
+### Future versions
+- API Version 1.1
 
 ### Troubleshooting
-
-- **Error: Source Directory Not Found**:
-  - If you encounter an error related to the `Shared Files` directory during the build process, ensure you've commented out the ROBOCOPY command as described above.
-
-- **Java Version Issues**:
-  - Ensure you are using Java JDK 14 or a compatible version. If you experience issues, consider upgrading or downgrading your Java installation as necessary.
+1. If you see the following warning in the Logs:
+```B4X
+File 'xxx.xxx' is missing from the Files tab (warning #17)
+```
+Press Ctrl + click to sync: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
+2. If you see the following warning in the Logs:
+```B4X
+' File 'xxx.xxx' in Files folder was not added to the Files tab.
+ 'You should either delete it Or add it To the project.
+' You can choose Tools - Clean unused files. (warning #14)
+```
+Go to Files Manager tab and click the 'Sync' button
+3. Compilation error:
+Make sure you are using Java JDK listed on the installation website. Otherwise, it may be missing JavaFX support and the application will not run.
 
 ### License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

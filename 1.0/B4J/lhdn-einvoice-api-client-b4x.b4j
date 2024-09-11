@@ -1,14 +1,10 @@
 ﻿AppType=JavaFX
 Build1=Default,my.computerise.einvoice.api.client,Sandbox
 Build2=Production,my.computerise.einvoice.api.client,Production
-File1=1.0-Invoice-Sample.json
-File2=1.0-Invoice-Sample.xml
-File3=1.bjl
-File4=config.properties
-FileGroup1=Default Group
+File1=1.bjl
+File2=icon.png
+FileGroup1=New Group
 FileGroup2=Default Group
-FileGroup3=New Group
-FileGroup4=Default Group
 Group=App
 Library1=b4xpages
 Library2=byteconverter
@@ -17,28 +13,29 @@ Library4=jcore
 Library5=jfx
 Library6=jokhttputils2
 Library7=json
-Library8=xui views
-Library9=jstringutils
+Library8=jstringutils
+Library9=xui views
 Module1=|relative|..\B4XMainPage
 Module2=|relative|..\EInvoice
 Module3=|relative|..\Env
 Module4=|relative|..\Platform
-NumberOfFiles=4
+NumberOfFiles=2
 NumberOfLibraries=9
 NumberOfModules=4
 Version=10
 @EndOfDesignText@
 ' Product: 			LHDN e-Invoice API Client
 ' Description: 		Make LHDN e-Invoice API call using SDK
-' Version: 			1.03
-' Language:			B4X
+' Version: 			1.04
+' Language:			B4X (B4J)
 ' License:			MIT
 ' Author:			Aeric Poon (email: aeric 80 at gmail dot com)
 ' GitHub:			https://github.com/pyhoon/lhdn-einvoice-api-client-b4x
 
 #Region Project Attributes 
 	#MainFormWidth: 900
-	#MainFormHeight: 600 
+	#MainFormHeight: 600
+	#IgnoreWarnings: 15
 #End Region
 
 Sub Process_Globals
