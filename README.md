@@ -61,10 +61,6 @@ This will copy the files from `Shared Files` folder to your B4J/B4A/B4i `Files` 
 9. To make API calls to LHDN Production environment, you need to specify the correct credentials in config.properties file. In the IDE, select `Production` from the build configuration dropdown list (next to Debug dropdown list) which is selected as `Default` by default.
 10. This is same for all platforms (B4J, B4A and B4i).
 
-### Future versions
-
-- API Version 1.1
-
 ### Troubleshooting
 
 1. If you see the following warning in the Logs:
