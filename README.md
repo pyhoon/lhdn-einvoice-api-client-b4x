@@ -81,8 +81,5 @@ This will copy the files from `Shared Files` folder to your B4J/B4A/B4i `Files` 
    Make sure you are using Java JDK listed on the installation website.\
    Otherwise, it may be missing JavaFX support and the application will not run.
 
-### Future versions
-- API Version 1.1
-
 ### License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
