@@ -27,6 +27,11 @@ This is a B4X project designed to interact with the LHDN e-Invoice API, enabling
    - For B4A, you need to install `B4A-Bridge` on an Android device for debugging. You can also use an Android Virtual Device (emulator).
    - For B4i, you need to install `B4i-Bridge` on an iOS device for debugging. Make sure you have specify the filenames for `#CertificateFile` and `#ProvisionFile` downloaded from Apple Developer website.
 
+4. **Additional libraries**
+   - This project requires an external [Encryption](https://www.b4x.com/android/forum/attachments/encryption1-1-zip.6666/) library
+   - Download the zip file and unzip the content to B4A/B4J or B4X directory inside the folder you have configured in the IDE menu Tools > Configure Paths. 
+   - Refresh the Libraries Manager tab
+  
 ### Configure the Project
 1. Navigate to `Shared Files` folder and open `config.properties` file in a text editor.
 2. Enter your registered ERP `clientId` and `clientSecret` in the `config.properties` file and save it. These credentials are required to generate an access token to make API calls.
