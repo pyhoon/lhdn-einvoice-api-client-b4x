@@ -80,11 +80,10 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	Label2.Text = "Document Format: " & format.ToUpperCase
 	Label3.Text = "Token expiry: -"
 	token_file = "Taxpayer.Token" ' Read Taxpayer token if exist
-	If File.Exists(token_dir, token_file) Then
-		Dim token As String =  File.ReadString(token_dir, token_file)
-		Dim token_expiry As Long = token.As(JSON).ToMap.Get("token_expiry")
-		Label3.Text = "Token expiry: " & FormatDateTime(token_expiry)
-	End If
+	If File.Exists(token_dir, token_file) = False Then Return
+	Dim token As String =  File.ReadString(token_dir, token_file)
+	Dim token_expiry As Long = token.As(JSON).ToMap.Get("token_expiry")
+	Label3.Text = "Token expiry: " & FormatDateTime(token_expiry)
 End Sub
 
 Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
