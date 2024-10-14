@@ -47,16 +47,16 @@ Public Sub Initialize
 	Env.Sandbox.idSrvBaseUrl = config.Get("Env.Sandbox.idSrvBaseUrl")
 	Env.Sandbox.clientId = config.Get("Env.Sandbox.clientId")
 	Env.Sandbox.clientSecret = config.Get("Env.Sandbox.clientSecret")
-	clientId = Env.Sandbox.clientId
-	clientSecret = Env.Sandbox.clientSecret
+	clientId = Env.Sandbox.clientId.Trim
+	clientSecret = Env.Sandbox.clientSecret.Trim
 	#End If
 	#If Production
 	Env.Production.apiBaseUrl = config.Get("Env.Production.apiBaseUrl")
 	Env.Production.idSrvBaseUrl = config.Get("Env.Production.idSrvBaseUrl")
 	Env.Production.clientId = config.Get("Env.Production.clientId")
 	Env.Production.clientSecret = config.Get("Env.Production.clientSecret")
-	clientId = Env.Production.clientId
-	clientSecret = Env.Production.clientSecret
+	clientId = Env.Production.clientId.Trim
+	clientSecret = Env.Production.clientSecret.Trim
 	#End If
 	E.Initialize
 	P.Initialize
