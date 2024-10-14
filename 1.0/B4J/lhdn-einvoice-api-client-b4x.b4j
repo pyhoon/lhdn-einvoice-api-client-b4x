@@ -18,13 +18,13 @@ FileGroup7=Default Group
 Group=App
 Library1=b4xpages
 Library2=byteconverter
-Library3=encryption
-Library4=jcore
-Library5=jfx
-Library6=jokhttputils2
-Library7=json
-Library8=jstringutils
-Library9=xui views
+Library3=jcore
+Library4=jfx
+Library5=jokhttputils2
+Library6=json
+Library7=jstringutils
+Library8=xui views
+Library9=encryption
 Module1=|relative|..\B4XMainPage
 Module2=|relative|..\EInvoice
 Module3=|relative|..\Env
@@ -36,7 +36,7 @@ Version=10
 @EndOfDesignText@
 ' Product: 			LHDN e-Invoice API Client
 ' Description: 		Make LHDN e-Invoice API call using SDK
-' Version: 			1.05
+' Version: 			1.06
 ' Language:			B4X (B4J)
 ' License:			MIT
 ' Author:			Aeric Poon (email: aeric 80 at gmail dot com)
