@@ -92,6 +92,7 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 			API = P.API_01
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
 			token_file = "Taxpayer.Token"
+			If File.Exists(token_dir, token_file) = False Then Return
 			Dim token As String =  File.ReadString(token_dir, token_file)
 			Dim token_expiry As Long = token.As(JSON).ToMap.Get("token_expiry")
 			Label3.Text = "Token expiry: " & FormatDateTime(token_expiry)
@@ -99,6 +100,7 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 			API = P.API_02
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
 			token_file = "Intermediary.Token"
+			If File.Exists(token_dir, token_file) = False Then Return
 			Dim token As String =  File.ReadString(token_dir, token_file)
 			Dim token_expiry As Long = token.As(JSON).ToMap.Get("token_expiry")
 			Label3.Text = "Token expiry: " & FormatDateTime(token_expiry)
