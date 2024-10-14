@@ -32,8 +32,8 @@ Sub Class_Globals
 	Private clientSecret As String
 	Private generatedAccessToken As String
 	Private headers As List
-	Private format As String = "JSON"
-	Private doctype As String '= "1.1"
+	Private format As String = "XML" ' "JSON"
+	Private docversion As String = "1.1"
 	Private token_expiry As Long
 	Private token_dir As String
 	Private token_file As String
@@ -61,7 +61,7 @@ Public Sub Initialize
 	E.Initialize
 	P.Initialize
 	If format = "" Then format = "XML"
-	If doctype <> "1.1" Then doctype = "1.0"
+	If docversion <> "1.1" Then docversion = "1.0"
 	#If B4J
 	token_dir = File.DirApp ' Objects
 	#Else If B4A
@@ -76,13 +76,15 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	Root.LoadLayout("1")
 	B4XPages.SetTitle(Me, "LHDN e-Invoice API Client")
 	PopulateApiList
-	Label1.Text = "Document Type: v" & doctype
+	Label1.Text = "Document Type: v" & docversion
 	Label2.Text = "Document Format: " & format.ToUpperCase
 	Label3.Text = "Token expiry: -"
 	token_file = "Taxpayer.Token" ' Read Taxpayer token if exist
-	Dim token As String =  File.ReadString(token_dir, token_file)
-	Dim token_expiry As Long = token.As(JSON).ToMap.Get("token_expiry")
-	Label3.Text = "Token expiry: " & FormatDateTime(token_expiry)
+	If File.Exists(token_dir, token_file) Then
+		Dim token As String =  File.ReadString(token_dir, token_file)
+		Dim token_expiry As Long = token.As(JSON).ToMap.Get("token_expiry")
+		Label3.Text = "Token expiry: " & FormatDateTime(token_expiry)
+	End If
 End Sub
 
 Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
@@ -230,10 +232,9 @@ Private Sub BtnSubmit_Click
 		Case 7
 			MakeEInvoicingApiCall(Null)
 		Case 8
-			Dim codeNumber As String = "JSON-INV12345"
-			'Dim codeNumber As String = "XML-INV12345"
+			Dim codeNumber As String = format & "-INV20240925-120326" ' Replace with your own internal invoice number
 			Dim ext As String = format.ToLowerCase
-			Dim content As String = File.ReadString(File.DirAssets, doctype & "-Invoice-Sample." & ext)
+			Dim content As String = File.ReadString(File.DirAssets, docversion & $" signed-${codeNumber}.${ext}"$)
 			Dim document As Map = CreateMap("format": format.ToUpperCase, _
 			"documentHash": SHA256(content), _
 			"codeNumber": codeNumber, _
