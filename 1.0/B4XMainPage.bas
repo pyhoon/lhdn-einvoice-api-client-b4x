@@ -32,8 +32,8 @@ Sub Class_Globals
 	Private clientSecret As String
 	Private generatedAccessToken As String
 	Private headers As List
-	Private format As String = "XML" ' "JSON"
-	Private docversion As String = "1.1"
+	Private format As String = "XML" ' JSON / XML 
+	Private docversion As String = "1.1" ' 1.0 / 1.1
 	Private token_expiry As Long
 	Private token_dir As String
 	Private token_file As String
@@ -60,10 +60,11 @@ Public Sub Initialize
 	#End If
 	E.Initialize
 	P.Initialize
-	If format = "" Then format = "XML"
+	' Defaults
+	If format <> "XML" Then format = "JSON"
 	If docversion <> "1.1" Then docversion = "1.0"
 	#If B4J
-	token_dir = File.DirApp ' Objects
+	token_dir = File.DirApp ' /Objects
 	#Else If B4A
 	token_dir = File.DirInternal
 	#Else If B4i
@@ -444,11 +445,8 @@ End Sub
 Sub FormatDateTime (Ticks As Long) As String
 	Dim DF As String = DateTime.DateFormat
 	DateTime.DateFormat = "yyyy-MM-dd hh:mm:ss aa"
-	'Dim CD As String = DateTime.Date(Ticks)
-	'Log(CD)
 	DateTime.SetTimeZone(8) ' Malaysian Time
 	Dim CD As String = DateTime.Date(Ticks)
-	'Log(CD)
 	DateTime.DateFormat = DF
 	Return CD
 End Sub
