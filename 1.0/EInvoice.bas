@@ -6,7 +6,7 @@ Version=10
 @EndOfDesignText@
 Sub Class_Globals
 	Private apiBaseUrl As String
-	Public API_01, API_02, API_03, API_04, API_05, API_06, API_07, API_08, API_09 As API
+	Public API_01, API_02, API_03, API_04, API_05, API_06, API_07, API_08, API_09, API_10 As API
 End Sub
 
 Public Sub Initialize
@@ -25,6 +25,7 @@ Public Sub Initialize
 	API_07 = CreateAPI("GET", "Get Document", $"https://${apiBaseUrl}/api/v1.0/documents/{uuid}/raw"$)
 	API_08 = CreateAPI("GET", "Get Document Details", $"https://${apiBaseUrl}/api/v1.0/documents/{uuid}/details"$)
 	API_09 = CreateAPI("GET", "Search Documents", $"https://${apiBaseUrl}/api/v1.0/documents/search?uuid={uuid}&submissionDateFrom={submissionDateFrom}&submissionDateTo={submissionDateTo}&continuationToken={continuationToken}&pageSize={pageSize}&issueDateFrom={issueDateFrom}&issueDateTo={issueDateTo}&direction={direction}&status={status}&documentType={documentType}&receiverId={receiverId}&receiverIdType={receiverIdType}&issuerTin={issuerTin}&receiverTin={receiverTin}"$)
+	API_10 = CreateAPI("GET", "Search Taxpayer's TIN", $"https://${apiBaseUrl}/api/v1.0/taxpayer/search/tin?idType={idType}&idValue={idValue}&taxpayerName={taxpayerName}"$)
 End Sub
 
 Private Sub CreateAPI (Verb As String, Name As String, Link As String) As API

@@ -1,5 +1,5 @@
 # LHDN e-Invoice API Client (B4X)
-Version: 1.06\
+Version: 1.07\
 Author: Aeric Poon
 
 ### Overview

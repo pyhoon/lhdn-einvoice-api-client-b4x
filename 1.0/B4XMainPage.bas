@@ -32,8 +32,8 @@ Sub Class_Globals
 	Private clientSecret As String
 	Private generatedAccessToken As String
 	Private headers As List
-	Private format As String = "XML" ' JSON / XML 
-	Private docversion As String = "1.1" ' 1.0 / 1.1
+	Private format As String ' JSON / XML
+	Private docversion As String ' 1.0 / 1.1
 	Private token_expiry As Long
 	Private token_dir As String
 	Private token_file As String
@@ -204,6 +204,13 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 			E.API_09.Link = E.API_09.Link.Replace($"?uuid={uuid}&submissionDateFrom={submissionDateFrom}&submissionDateTo={submissionDateTo}&continuationToken={continuationToken}&pageSize={pageSize}&issueDateFrom={issueDateFrom}&issueDateTo={issueDateTo}&direction={direction}&status={status}&documentType={documentType}&receiverId={receiverId}&receiverIdType={receiverIdType}&issuerTin={issuerTin}&receiverTin={receiverTin}"$, "")
 			API = E.API_09
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+		Case 16
+			E.API_10.Link = E.API_10.Link.Replace("{idType}", "NRIC")	'NRIC, PASSPORT, BRN, ARMY
+			E.API_10.Link = E.API_10.Link.Replace("{idValue}", "770625015324")
+			'E.API_10.Link = E.API_10.Link.Replace("{taxpayerName}", "ABC XYZ")
+			E.API_10.Link = E.API_10.Link.Replace("&taxpayerName={taxpayerName}", "")
+			API = E.API_10
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
 		Case Else
 			LblEndPoint.Text = "Please select an API"
 			TxtResponse.Text = ""
@@ -261,9 +268,10 @@ Private Sub BtnSubmit_Click
 			Dim data As Map = CreateMap("status": "rejected", _
 			"reason": "some reason for rejected document")
 			MakeEInvoicingApiCall(data)
-		Case 11, 12, 13, 14, 15
+		Case 11, 12, 13, 14, 15, 16
 			MakeEInvoicingApiCall(Null)
 		Case Else
+			Log("New API not handled")
 			TxtResponse.Text = ""
 	End Select
 End Sub
@@ -287,6 +295,7 @@ Sub PopulateApiList
 	apis.Add(E.API_07.Name)
 	apis.Add(E.API_08.Name)
 	apis.Add(E.API_09.Name)
+	apis.Add(E.API_10.Name)
 	B4XComboBox1.SetItems(apis)
 End Sub
 

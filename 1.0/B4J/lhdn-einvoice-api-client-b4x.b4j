@@ -32,11 +32,11 @@ Module4=|relative|..\Platform
 NumberOfFiles=7
 NumberOfLibraries=9
 NumberOfModules=4
-Version=10
+Version=10.2
 @EndOfDesignText@
 ' Product: 			LHDN e-Invoice API Client
 ' Description: 		Make LHDN e-Invoice API call using SDK
-' Version: 			1.06
+' Version: 			1.07
 ' Language:			B4X (B4J)
 ' License:			MIT
 ' Author:			Aeric Poon (email: aeric 80 at gmail dot com)

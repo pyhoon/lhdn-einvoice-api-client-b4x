@@ -23,7 +23,7 @@ Version=8.51
 'Code module
 #Region  Project Attributes 
 	#ApplicationLabel: 	LHDN e-Invoice API Client
-	#Version: 			1.0.6
+	#Version: 			1.0.7
 	'Language:			B4X (B4i)
 	'License:			MIT
 	'Author:			Aeric Poon (email: aeric 80 at gmail dot com)
