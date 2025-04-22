@@ -1,5 +1,5 @@
 # LHDN e-Invoice API Client (B4X)
-Version: 1.07\
+Version: 1.08\
 Author: Aeric Poon
 
 ### Overview
@@ -21,13 +21,13 @@ This is a B4X project designed to interact with the LHDN e-Invoice API, enabling
    ```
    Alternatively, you can download the ZIP file and extract it to your desired location.
    
-3. **Install B4J/B4A/B4i**:
+2. **Install B4J/B4A/B4i**:
    - Download and install [B4J](https://www.b4x.com/b4j.html) / [B4A](https://www.b4x.com/b4a.html) / [B4i](https://www.b4x.com/b4i.html) by following the instructions provided on the website.
    - If you encounter any issues during installation, you can get support from the [B4X developer community forum](https://www.b4x.com/android/forum/).
    - For B4A, you need to install `B4A-Bridge` on an Android device for debugging. You can also use an Android Virtual Device (emulator).
    - For B4i, you need to install `B4i-Bridge` on an iOS device for debugging. Make sure you have specify the filenames for `#CertificateFile` and `#ProvisionFile` downloaded from Apple Developer website.
 
-4. **Additional libraries**
+3. **Additional libraries**
    - This project requires an external [Encryption](https://www.b4x.com/android/forum/attachments/encryption1-1-zip.6666/) library
    - Download the zip file and unzip the content to B4A/B4J or B4X directory inside the folder you have configured in the IDE menu Tools > Configure Paths. 
    - Refresh the Libraries Manager tab
@@ -40,19 +40,13 @@ This is a B4X project designed to interact with the LHDN e-Invoice API, enabling
 - Do not publish the final binary app to the public.
 
 ### Open the Project
-1. Double click the file `lhdn-einvoice-api-client-b4x.b4j` for B4J or `lhdn-einvoice-api-client-b4x.b4a` for B4A or `lhdn-einvoice-api-client-b4x.b4i` for B4i to open the project.
-2. Click the `B4XMainPage` module (if not already open) and locate the following section:
-```B4X
-#Region Shared Files
-#CustomBuildAction: folders ready, %WINDIR%\System32\Robocopy.exe,"..\..\Shared Files" "..\Files"
-'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
-#End Region
-```
-3. Press and hold Ctrl key on keyboard and mouse click on the link: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True\
-This will copy the files from `Shared Files` folder to your B4J/B4A/B4i `Files` folder.
-4. Click the **Run** button (play button).
-5. Wait for the compilation and the application interface will launch.
-6. For Android, you need to click install from the device. 
+1. Double click the project file\
+   `lhdn-einvoice-api-client-b4x.b4j` (B4J)\
+   `lhdn-einvoice-api-client-b4x.b4a` (B4A)\
+   `lhdn-einvoice-api-client-b4x.b4i` (B4i)
+3. Click the **Run** button (play button).
+4. Wait for the compilation to finish and the application interface will be launched.
+5. For Android and iOS, you need to click install from the device.
 
 ### Running the Application
 1. Select an API from the dropdown list or combobox (e.g. "Login as Taxpayer System").
@@ -63,8 +57,9 @@ This will copy the files from `Shared Files` folder to your B4J/B4A/B4i `Files` 
 6. The subs you need to focus are `B4XComboBox1_SelectedIndexChanged` and `BtnSubmit_Click`.
 7. You may also want to replace the `1.x-Invoice-Sample.xml` or `1.x-Invoice-Sample.json` files with your copy.
 8. By default, the IDE is using `Default` build configuration to make API calls to LHDN Sandbox environment.
-9. To make API calls to LHDN Production environment, you need to specify the correct credentials in config.properties file. In the IDE, select `Production` from the build configuration dropdown list (next to Debug dropdown list) which is selected as `Default` by default.
-10. This is same for all platforms (B4J, B4A and B4i).
+9. To make API calls to LHDN Production environment, you need to specify the correct credentials in config.properties file.
+10. In the IDE, select `Production` from the build configuration dropdown list (next to Debug dropdown list) which is selected as `Default` by default.
+11. This is same for all platforms (B4J, B4A and B4i).
 
 ### Troubleshooting
 
@@ -72,7 +67,9 @@ This will copy the files from `Shared Files` folder to your B4J/B4A/B4i `Files` 
    ```
    File 'xxx.xxx' is missing from the Files tab (warning #17)
    ```
-   Press Ctrl + click to sync: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
+   You must first compile the project.\
+   The IDE will automatically copy the files from Shared Files folder to Files folfer.\
+   Alternatively, you can also press Ctrl + click to sync: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
 
 2. If you see the following warning in the Logs:
    ```
