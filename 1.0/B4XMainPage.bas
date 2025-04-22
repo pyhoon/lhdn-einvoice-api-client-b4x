@@ -68,7 +68,7 @@ Public Sub Initialize
 	#Else If B4A
 	token_dir = File.DirInternal
 	#Else If B4i
-	token_dir = File.DirDocuments	
+	token_dir = File.DirDocuments
 	#End If
 End Sub
 
@@ -346,6 +346,7 @@ Sub MakePlatformApiCall (payload As Map)
 		Label3.Text = "Token expiry: " & FormatDateTime(token_expiry)
 		ShowMessage(response.As(JSON).ToString)
 	Else
+		Log(job.ErrorMessage)
 		Dim error As Map = job.ErrorMessage.As(JSON).ToMap
 		ShowError(error.As(JSON).ToString)
 	End If
@@ -368,6 +369,7 @@ Sub MakePlatformApiCall2
 		Dim message As Map = job.GetString.As(JSON).ToMap
 		ShowMessage(message.As(JSON).ToString)
 	Else
+		Log(job.ErrorMessage)
 		Dim error As Map = job.ErrorMessage.As(JSON).ToMap
 		ShowError(error.As(JSON).ToString)
 	End If

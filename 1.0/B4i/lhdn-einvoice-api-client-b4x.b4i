@@ -23,7 +23,7 @@ Version=8.51
 'Code module
 #Region  Project Attributes 
 	#ApplicationLabel: 	LHDN e-Invoice API Client
-	#Version: 			1.0.7
+	#Version: 			1.0.8
 	'Language:			B4X (B4i)
 	'License:			MIT
 	'Author:			Aeric Poon (email: aeric 80 at gmail dot com)
@@ -37,15 +37,23 @@ Version=8.51
 #End Region
 #if RELEASE
 	#CertificateFile: ios_distribution.cer
-	#ProvisionFile: distribution.mobileprovision
+	#ProvisionFile: Distribution.mobileprovision
 #Else
 	#CertificateFile: ios_development.cer
-	#ProvisionFile: development.mobileprovision
+	#ProvisionFile: Development.mobileprovision
 #End If
 
 Sub Process_Globals
 	Public App As Application
 	Public NavControl As NavigationController
+'	#If Sandbox
+'	Public Sandbox As Sandbox
+'	Type Sandbox (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret As String)
+'	#End If
+'	#If Production
+'	Public Production As Production
+'	Type Production (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret As String)
+'	#End If
 End Sub
 
 Private Sub Application_Start (Nav As NavigationController)
