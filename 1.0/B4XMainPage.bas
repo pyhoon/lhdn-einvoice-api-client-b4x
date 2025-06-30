@@ -237,7 +237,7 @@ Private Sub BtnSubmit_Click
 			"scope": "InvoicingAPI")
 			If B4XComboBox1.SelectedIndex = 2 Then
 				headers.Initialize
-				headers.Add(CreateMap("onbehalfof": "100015840"))
+				headers.Add(CreateMap("onbehalfof": "IG12345678912:201901234567"))
 			End If
 			
 			If TokenExpired Then
