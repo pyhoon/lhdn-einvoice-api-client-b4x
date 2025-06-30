@@ -9,6 +9,7 @@ Sub Class_Globals
 	Private idSrvBaseUrl As String
 	Public API_01, API_02, API_03, API_04, API_05, API_06 As API
 	Type API (Verb As String, Name As String, Link As String)
+	' URL: https://sdk.myinvois.hasil.gov.my/api/
 End Sub
 
 Public Sub Initialize

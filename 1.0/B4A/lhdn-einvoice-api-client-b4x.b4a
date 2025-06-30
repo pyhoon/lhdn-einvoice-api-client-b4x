@@ -20,12 +20,12 @@ Module5=Starter
 NumberOfFiles=1
 NumberOfLibraries=8
 NumberOfModules=5
-Version=12.8
+Version=13.3
 @EndOfDesignText@
 #Region  Project Attributes 
 	#ApplicationLabel: 	LHDN e-Invoice API Client
 	#VersionCode: 		1
-	#VersionName: 		1.08
+	#VersionName: 		1.09
 	'Language:			B4X (B4A)
 	'License:			MIT
 	'Author:			Aeric Poon (email: aeric 80 at gmail dot com)

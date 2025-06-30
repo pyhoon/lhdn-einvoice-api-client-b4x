@@ -49,6 +49,8 @@ Public Sub Initialize
 	Env.Sandbox.clientSecret = config.Get("Env.Sandbox.clientSecret")
 	clientId = Env.Sandbox.clientId.Trim
 	clientSecret = Env.Sandbox.clientSecret.Trim
+	Log($"clientId=[${clientId}]"$)
+	Log($"clientSecret=[${clientSecret}]"$)
 	#End If
 	#If Production
 	Env.Production.apiBaseUrl = config.Get("Env.Production.apiBaseUrl")
@@ -211,6 +213,10 @@ Private Sub B4XComboBox1_SelectedIndexChanged (Index As Int)
 			E.API_10.Link = E.API_10.Link.Replace("&taxpayerName={taxpayerName}", "")
 			API = E.API_10
 			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
+		Case 17
+			E.API_11.Link = E.API_11.Link.Replace("{qrCodeText}", "4e1bc907-25b7-45b1-9620-2d671a6f9cae")
+			API = E.API_11
+			LblEndPoint.Text = $"${API.Name} (${API.Verb})${CRLF}${API.Link}"$
 		Case Else
 			LblEndPoint.Text = "Please select an API"
 			TxtResponse.Text = ""
@@ -268,7 +274,7 @@ Private Sub BtnSubmit_Click
 			Dim data As Map = CreateMap("status": "rejected", _
 			"reason": "some reason for rejected document")
 			MakeEInvoicingApiCall(data)
-		Case 11, 12, 13, 14, 15, 16
+		Case 11, 12, 13, 14, 15, 16, 17
 			MakeEInvoicingApiCall(Null)
 		Case Else
 			Log("New API not handled")
@@ -296,6 +302,7 @@ Sub PopulateApiList
 	apis.Add(E.API_08.Name)
 	apis.Add(E.API_09.Name)
 	apis.Add(E.API_10.Name)
+	apis.Add(E.API_11.Name)
 	B4XComboBox1.SetItems(apis)
 End Sub
 
@@ -323,7 +330,7 @@ Sub MakePlatformApiCall (payload As Map)
 					job.GetRequest.SetHeader(Key, header.Get(Key))
 				Next				
 			End If
-			job.GetRequest.SetContentType("application/x-www-form-urlencoded")
+			'job.GetRequest.SetContentType("application/x-www-form-urlencoded")
 		Case Else
 			ShowError("Bad Request")
 			Return
