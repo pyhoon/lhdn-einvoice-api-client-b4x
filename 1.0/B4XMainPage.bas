@@ -330,7 +330,7 @@ Sub MakePlatformApiCall (payload As Map)
 					job.GetRequest.SetHeader(Key, header.Get(Key))
 				Next				
 			End If
-			'job.GetRequest.SetContentType("application/x-www-form-urlencoded")
+			job.GetRequest.SetContentType("application/x-www-form-urlencoded")
 		Case Else
 			ShowError("Bad Request")
 			Return
