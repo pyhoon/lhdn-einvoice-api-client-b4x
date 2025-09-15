@@ -68,7 +68,7 @@ This is a B4X project designed to interact with the LHDN e-Invoice API, enabling
    File 'xxx.xxx' is missing from the Files tab (warning #17)
    ```
    You must first compile the project.\
-   The IDE will automatically copy the files from Shared Files folder to Files folfer.\
+   The IDE will automatically copy the files from Shared Files folder to Files folder.\
    Alternatively, you can also press Ctrl + click to sync: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
 
 2. If you see the following warning in the Logs:
