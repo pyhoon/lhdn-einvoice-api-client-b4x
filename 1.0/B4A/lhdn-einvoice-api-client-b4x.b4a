@@ -1,5 +1,5 @@
-﻿Build1=Default,my.computerise.einvoice.api.client,Sandbox
-Build2=Production,my.computerise.einvoice.api.client,Production
+﻿Build1=Production,my.computerise.einvoice.api.client,Production
+Build2=Sandbox,my.computerise.einvoice.api.client,Sandbox
 File1=1.bal
 FileGroup1=New Group
 Group=App
@@ -11,21 +11,20 @@ Library5=okhttputils2
 Library6=stringutils
 Library7=xui views
 Library8=byteconverter
-ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="35"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~SetApplicationAttribute(android:theme, "@style/LightTheme")~\n~CreateResource(values, theme.xml,~\n~<resources>~\n~    <style~\n~        name="LightTheme" parent="@android:style/Theme.Material.Light">~\n~       <item name="android:actionMenuTextAppearance">@style/LowerCaseMenu</item>~\n~       <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>~\n~    </style>~\n~     <style name="LowerCaseMenu" parent="android:TextAppearance.Material.Widget.ActionBar.Menu">~\n~        <item name="android:textAllCaps">false</item>~\n~    </style>~\n~</resources>~\n~)
 Module1=|relative|..\B4XMainPage
 Module2=|relative|..\EInvoice
-Module3=|relative|..\Env
-Module4=|relative|..\Platform
-Module5=Starter
+Module3=|relative|..\Platform
+Module4=Starter
 NumberOfFiles=1
 NumberOfLibraries=8
-NumberOfModules=5
-Version=13.3
+NumberOfModules=4
+Version=13.4
 @EndOfDesignText@
 #Region  Project Attributes 
 	#ApplicationLabel: 	LHDN e-Invoice API Client
 	#VersionCode: 		1
-	#VersionName: 		1.09
+	#VersionName: 		1.10
 	'Language:			B4X (B4A)
 	'License:			MIT
 	'Author:			Aeric Poon (email: aeric 80 at gmail dot com)

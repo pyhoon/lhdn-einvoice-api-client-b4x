@@ -1,5 +1,5 @@
-﻿Build1=Default,my.computerise.einvoice.api.client,Sandbox
-Build2=Production,my.computerise.einvoice.api.client,Production
+﻿Build1=Production,my.computerise.einvoice.api.client,Production
+Build2=Sandbox,my.computerise.einvoice.api.client,Sandbox
 File1=1.bil
 FileGroup1=New Group
 Group=App
@@ -13,17 +13,16 @@ Library7=xui views
 Library8=irandomaccessfile
 Module1=|relative|..\B4XMainPage
 Module2=|relative|..\EInvoice
-Module3=|relative|..\Env
-Module4=|relative|..\Platform
+Module3=|relative|..\Platform
 NumberOfFiles=1
 NumberOfLibraries=8
-NumberOfModules=4
+NumberOfModules=3
 Version=8.8
 @EndOfDesignText@
 'Code module
 #Region  Project Attributes 
 	#ApplicationLabel: 	LHDN e-Invoice API Client
-	#Version: 			1.0.9
+	#Version: 			1.1.0
 	'Language:			B4X (B4i)
 	'License:			MIT
 	'Author:			Aeric Poon (email: aeric 80 at gmail dot com)
@@ -46,14 +45,6 @@ Version=8.8
 Sub Process_Globals
 	Public App As Application
 	Public NavControl As NavigationController
-'	#If Sandbox
-'	Public Sandbox As Sandbox
-'	Type Sandbox (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret As String)
-'	#End If
-'	#If Production
-'	Public Production As Production
-'	Type Production (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret As String)
-'	#End If
 End Sub
 
 Private Sub Application_Start (Nav As NavigationController)

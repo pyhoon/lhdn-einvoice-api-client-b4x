@@ -5,22 +5,14 @@ Type=Class
 Version=10
 @EndOfDesignText@
 Sub Class_Globals
-	Private apiBaseUrl As String
-	Private idSrvBaseUrl As String
+	'URL: https://sdk.myinvois.hasil.gov.my/api/
 	Public API_01, API_02, API_03, API_04, API_05, API_06 As API
 	Type API (Verb As String, Name As String, Link As String)
-	' URL: https://sdk.myinvois.hasil.gov.my/api/
 End Sub
 
 Public Sub Initialize
-	#If Sandbox
-	apiBaseUrl = Env.Sandbox.apiBaseUrl
-	idSrvBaseUrl = Env.Sandbox.apiBaseUrl
-	#End If
-	#If Production
-	apiBaseUrl = Env.Production.apiBaseUrl
-	idSrvBaseUrl = Env.Production.apiBaseUrl
-	#End If
+	Dim apiBaseUrl As String = B4XPages.MainPage.Env.apiBaseUrl
+	Dim idSrvBaseUrl As String = B4XPages.MainPage.Env.idSrvBaseUrl
 	API_01 = CreateAPI("POST", "Login as Taxpayer System", $"https://${idSrvBaseUrl}/connect/token"$)
 	API_02 = CreateAPI("POST", "Login as Intermediary System", $"https://${idSrvBaseUrl}/connect/token"$)
 	API_03 = CreateAPI("GET", "Get All Document Types", $"https://${apiBaseUrl}/api/v1.0/documenttypes"$)

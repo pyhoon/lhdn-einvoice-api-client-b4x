@@ -6,16 +6,16 @@ Version=9.85
 @EndOfDesignText@
 #Region Shared Files
 #CustomBuildAction: folders ready, %WINDIR%\System32\Robocopy.exe,"..\..\Shared Files" "..\Files"
-'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
-#End Region
-#Region GitHub Desktop
-'Ctrl + click to open: ide://run?file=%WINDIR%\System32\cmd.exe&Args=/c&Args=github&Args=.
-#End Region
-#Region Zip B4XPages Project
-'Ctrl + click to export: ide://run?File=%B4X%\Zipper.jar&Args=%PROJECT_NAME%.zip
+#Region Macros
+#Macro: Title, Export Project, ide://run?File=%B4X%\Zipper.jar&Args=%PROJECT_NAME%.zip
+#Macro: Title, GitHub Desktop, ide://run?file=%WINDIR%\System32\cmd.exe&Args=/c&Args=github&Args=.
+#Macro: Title, Sync Files, ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
 #End Region
 
 Sub Class_Globals
+	#If B4J
+	Private fx As JFX
+	#End If
 	Private xui As XUI
 	Private API As API
 	Private E As EInvoice
@@ -24,42 +24,46 @@ Sub Class_Globals
 	Private Label1 As Label
 	Private Label2 As Label
 	Private Label3 As Label
+	Private BtnSubmit As Button
+	Private LblEndPoint As Label
 	Private B4XComboBox1 As B4XComboBox
-	Private LblEndPoint As B4XView
-	Private BtnSubmit As B4XView
 	Private TxtResponse As B4XFloatTextField
-	Private clientId As String
-	Private clientSecret As String
-	Private generatedAccessToken As String
 	Private headers As List
-	Private format As String ' JSON / XML
-	Private docversion As String ' 1.0 / 1.1
-	Private token_expiry As Long
 	Private token_dir As String
 	Private token_file As String
+	Private token_expiry As Long
+	Private access_token As String
+	Private format As String ' JSON / XML
+	Private docversion As String ' 1.0 / 1.1
+	Private UseClientSecret2 As Boolean = False
+	Public Env As Environment
+	Type Environment (apiBaseUrl As String, idSrvBaseUrl As String, clientId As String, clientSecret1 As String, clientSecret2 As String)
 End Sub
 
 Public Sub Initialize
 	'B4XPages.GetManager.LogEvents = True
 	Dim config As Map = File.ReadMap(File.DirAssets, "config.properties")
 	#If Sandbox
-	Env.Sandbox.apiBaseUrl = config.Get("Env.Sandbox.apiBaseUrl")
-	Env.Sandbox.idSrvBaseUrl = config.Get("Env.Sandbox.idSrvBaseUrl")
-	Env.Sandbox.clientId = config.Get("Env.Sandbox.clientId")
-	Env.Sandbox.clientSecret = config.Get("Env.Sandbox.clientSecret")
-	clientId = Env.Sandbox.clientId.Trim
-	clientSecret = Env.Sandbox.clientSecret.Trim
-	Log($"clientId=[${clientId}]"$)
-	Log($"clientSecret=[${clientSecret}]"$)
+	Dim Prefix As String = "Sandbox."
 	#End If
 	#If Production
-	Env.Production.apiBaseUrl = config.Get("Env.Production.apiBaseUrl")
-	Env.Production.idSrvBaseUrl = config.Get("Env.Production.idSrvBaseUrl")
-	Env.Production.clientId = config.Get("Env.Production.clientId")
-	Env.Production.clientSecret = config.Get("Env.Production.clientSecret")
-	clientId = Env.Production.clientId.Trim
-	clientSecret = Env.Production.clientSecret.Trim
+	Dim Prefix As String = "Production."
 	#End If
+	Env.Initialize
+	Env.apiBaseUrl = config.Get(Prefix & "apiBaseUrl")
+	Env.idSrvBaseUrl = config.Get(Prefix & "idSrvBaseUrl")
+	Env.clientId = config.Get(Prefix & "clientId")
+	Env.clientSecret1 = config.Get(Prefix & "clientSecret1")
+	Env.clientSecret2 = config.Get(Prefix & "clientSecret2")
+	Env.clientId = Env.clientId.Trim
+	Env.clientSecret1 = Env.clientSecret1.Trim
+	Env.clientSecret2 = Env.clientSecret2.Trim
+	Log($"clientId=[${Env.clientId}]"$)
+	Log($"clientSecret1=[${Env.clientSecret1}]"$)
+	Log($"clientSecret2=[${Env.clientSecret2}]"$)
+	Log($"apiBaseUrl=[${Env.apiBaseUrl}]"$)
+	Log($"idSrvBaseUrl=[${Env.idSrvBaseUrl}]"$)
+	
 	E.Initialize
 	P.Initialize
 	' Defaults
@@ -72,6 +76,8 @@ Public Sub Initialize
 	#Else If B4i
 	token_dir = File.DirDocuments
 	#End If
+	'UseClientSecret2 = True ' uncomment if want to use alternate Client Secret
+	If UseClientSecret2 Then Log("UseClientSecret2=True") Else Log("UseClientSecret1=True")
 End Sub
 
 Private Sub B4XPage_Created (Root1 As B4XView)
@@ -79,6 +85,9 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	Root.LoadLayout("1")
 	B4XPages.SetTitle(Me, "LHDN e-Invoice API Client")
 	PopulateApiList
+	#If B4J
+	BtnSubmit.MouseCursor = fx.Cursors.HAND	
+	#End If
 	Label1.Text = "Document Type: v" & docversion
 	Label2.Text = "Document Format: " & format.ToUpperCase
 	Label3.Text = "Token expiry: -"
@@ -225,16 +234,25 @@ End Sub
 
 Private Sub BtnSubmit_Click
 	Select B4XComboBox1.SelectedIndex
+		Case 0
+			xui.MsgboxAsync("Please select an API", "Error")
+			Return
 		Case 1, 2
 			If HasCredentials = False Then
 				xui.MsgboxAsync("Credentials required", "Error")
 				Return
 			End If
-			Dim data As Map = CreateMap( _
-			"client_id": clientId, _
-			"client_secret": clientSecret, _
-			"grant_type": "client_credentials", _
-			"scope": "InvoicingAPI")
+			Dim data As Map
+			data.Initialize
+			data.Put("client_id", Env.clientId)
+			If UseClientSecret2 Then
+				data.Put("client_secret", Env.clientSecret2)
+			Else
+				data.Put("client_secret", Env.clientSecret1)
+			End If
+			data.Put("grant_type", "client_credentials")
+			data.Put("scope", "InvoicingAPI")
+			
 			If B4XComboBox1.SelectedIndex = 2 Then
 				headers.Initialize
 				headers.Add(CreateMap("onbehalfof": "IG12345678912:201901234567"))
@@ -242,18 +260,35 @@ Private Sub BtnSubmit_Click
 			
 			If TokenExpired Then
 				Log("Token is missing or has expired")
+				ShowError("Token is missing or has expired")
 				MakePlatformApiCall(data)
 			Else
 				Log("Token is not expired")
+				Log("Existing token will be used")
 				'Dim token As String =  File.ReadString(token_dir, token_file)
 				'ShowMessage(token)
-				ShowMessage("Already login")
+				ShowMessage("Token is not expired" & CRLF & "Existing token will be used")
 			End If
 		Case 3, 4, 5, 6
+			If TokenExpired Then
+				Log("Token is missing or has expired")
+				ShowError("Token is missing or has expired")
+				Return
+			End If
 			MakePlatformApiCall2
 		Case 7
+			If TokenExpired Then
+				Log("Token is missing or has expired")
+				ShowError("Token is missing or has expired")
+				Return
+			End If			
 			MakeEInvoicingApiCall(Null)
 		Case 8
+			If TokenExpired Then
+				Log("Token is missing or has expired")
+				ShowError("Token is missing or has expired")
+				Return
+			End If			
 			Dim codeNumber As String = format & "-INV20240925-120326" ' Replace with your own internal invoice number
 			Dim ext As String = format.ToLowerCase
 			Dim content As String = File.ReadString(File.DirAssets, docversion & $" signed-${codeNumber}.${ext}"$)
@@ -267,14 +302,29 @@ Private Sub BtnSubmit_Click
 			Dim data As Map = CreateMap("documents": documents)
 			MakeEInvoicingApiCall(data)
 		Case 9
+			If TokenExpired Then
+				Log("Token is missing or has expired")
+				ShowError("Token is missing or has expired")
+				Return
+			End If			
 			Dim data As Map = CreateMap("status": "cancelled", _
 			"reason": "some reason for cancelled document")
 			MakeEInvoicingApiCall(data)
 		Case 10
+			If TokenExpired Then
+				Log("Token is missing or has expired")
+				ShowError("Token is missing or has expired")
+				Return
+			End If			
 			Dim data As Map = CreateMap("status": "rejected", _
 			"reason": "some reason for rejected document")
 			MakeEInvoicingApiCall(data)
 		Case 11, 12, 13, 14, 15, 16, 17
+			If TokenExpired Then
+				Log("Token is missing or has expired")
+				ShowError("Token is missing or has expired")
+				Return
+			End If			
 			MakeEInvoicingApiCall(Null)
 		Case Else
 			Log("New API not handled")
@@ -338,11 +388,11 @@ Sub MakePlatformApiCall (payload As Map)
 	Wait For (job) JobDone (job As HttpJob)
 	If job.Success Then
 		Dim response As Map = job.GetString.As(JSON).ToMap
-		generatedAccessToken = response.Get("access_token")
+		access_token = response.Get("access_token")
 		Dim expires_in As String = response.Get("expires_in")
 		Dim token_type As String = response.Get("token_type")
 		Dim scope As String = response.Get("scope")
-		Log($"access_token: ${generatedAccessToken}"$)
+		Log($"access_token: ${access_token}"$)
 		Log($"expires_in: ${expires_in}"$)
 		Log($"token_type: ${token_type}"$)
 		Log($"scope: ${scope}"$)
@@ -370,7 +420,7 @@ Sub MakePlatformApiCall2
 			ShowError("Bad Request")
 			Return
 	End Select	
-	job.GetRequest.SetHeader("Authorization", $"Bearer ${generatedAccessToken}"$)
+	job.GetRequest.SetHeader("Authorization", $"Bearer ${access_token}"$)
 	Wait For (job) JobDone (job As HttpJob)
 	If job.Success Then
 		Dim message As Map = job.GetString.As(JSON).ToMap
@@ -403,7 +453,7 @@ Sub MakeEInvoicingApiCall (payload As Map)
 				ShowError("Bad Request")
 				Return
 		End Select
-		job.GetRequest.SetHeader("Authorization", $"Bearer ${generatedAccessToken}"$)
+		job.GetRequest.SetHeader("Authorization", $"Bearer ${access_token}"$)
 		Wait For (job) JobDone (job As HttpJob)
 		If job.Success Then
 			Log("Success: " & job.Response.StatusCode)
@@ -473,10 +523,14 @@ Sub TokenExpired As Boolean
 	If File.Exists(token_dir, token_file) = False Then Return True
 	Dim token As String = File.ReadString(token_dir, token_file)
 	Dim expiry As Long = token.As(JSON).ToMap.Get("token_expiry")
-	generatedAccessToken = token.As(JSON).ToMap.Get("access_token")
+	access_token = token.As(JSON).ToMap.Get("access_token")
 	Return expiry < DateTime.Now - 60000 ' If expire in less than 60 seconds
 End Sub
 
-Sub HasCredentials As Boolean
-	Return Not(clientId = "" Or clientSecret = "" Or clientId = "xxxxxxxxxx" Or clientSecret = "xxxxxxxxxx")
+Sub HasCredentials As Boolean	
+	If UseClientSecret2 Then
+		Return Not(Env.clientId = "" Or Env.clientSecret2 = "" Or Env.clientId.Contains("xxxxxxxx") Or Env.clientSecret2.Contains("xxxxxxxx"))
+	Else
+		Return Not(Env.clientId = "" Or Env.clientSecret1 = "" Or Env.clientId.Contains("xxxxxxxx") Or Env.clientSecret1.Contains("xxxxxxxx"))
+	End If
 End Sub

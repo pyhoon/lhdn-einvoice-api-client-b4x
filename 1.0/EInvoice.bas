@@ -5,18 +5,12 @@ Type=Class
 Version=10
 @EndOfDesignText@
 Sub Class_Globals
-	Private apiBaseUrl As String
+	'URL: https://sdk.myinvois.hasil.gov.my/einvoicingapi/
 	Public API_01, API_02, API_03, API_04, API_05, API_06, API_07, API_08, API_09, API_10, API_11 As API
-	' URL: https://sdk.myinvois.hasil.gov.my/einvoicingapi/
 End Sub
 
 Public Sub Initialize
-	#If Sandbox
-	apiBaseUrl = Env.Sandbox.apiBaseUrl
-	#End If
-	#If Production
-	apiBaseUrl = Env.Production.apiBaseUrl
-	#End If
+	Dim apiBaseUrl As String = B4XPages.MainPage.Env.apiBaseUrl
 	API_01 = CreateAPI("GET", "Validate Taxpayer's TIN", $"https://${apiBaseUrl}/api/v1.0/taxpayer/validate/{tin}?idType={idType}&idValue={idValue}"$)
 	API_02 = CreateAPI("POST", "Submit Documents", $"https://${apiBaseUrl}/api/v1.0/documentsubmissions"$)
 	API_03 = CreateAPI("PUT", "Cancel Document", $"https://${apiBaseUrl}/api/v1.0/documents/state/{UUID}/state"$)
