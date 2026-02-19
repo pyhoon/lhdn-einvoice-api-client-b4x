@@ -1,5 +1,5 @@
 # LHDN e-Invoice API Client (B4X)
-Version: 1.09\
+Version: 1.10\
 Author: Aeric Poon
 
 ### Overview
@@ -69,9 +69,10 @@ This is a B4X project designed to interact with the LHDN e-Invoice API, enabling
    ```
    You must first compile the project.\
    The IDE will automatically copy the files from Shared Files folder to Files folder.\
-   Alternatively, you can also press Ctrl + click to sync: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
+   
+   Alternatively, you can also click the #Macro: Sync Files (or press Ctrl + 3)
 
-2. If you see the following warning in the Logs:
+3. If you see the following warning in the Logs:
    ```
    File 'xxx.xxx' in Files folder was not added to the Files tab.
    You should either delete it or add it to the project.
@@ -79,7 +80,7 @@ This is a B4X project designed to interact with the LHDN e-Invoice API, enabling
    ```
    Go to Files Manager tab and click the 'Sync' button
 
-3. Compilation error in B4J:\
+4. Compilation error in B4J:\
    Make sure you are using Java JDK listed on the installation website.\
    Otherwise, it may be missing JavaFX support and the application will not run.
 
